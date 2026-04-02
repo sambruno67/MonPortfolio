@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio de Wendemmi Bruno SAM  — Développeur Full-stack & Mobile basé à Ouagadougou, Burkina Faso.">
+  <title>Wendemmi Bruno SAM — Développeur Full-stack & Mobile</title>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ════════════════════════════════
+       CURSEUR PERSONNALISÉ (décoratif)
+       ════════════════════════════════ -->
+  <div class="cursor" id="cursor" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- ════════════════════════════════
+       NAVIGATION
+       ════════════════════════════════ -->
+  <header>
+    <nav class="navbar" role="navigation" aria-label="Navigation principale">
+
+      <div class="nav-logo">
+        <span class="nav-logo-prefix">~/</span>Mon portfolio
+      </div>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav-links" id="nav-links" role="list">
+        <li><a href="#about">À propos</a></li>
+        <li><a href="#skills">Compétences</a></li>
+        <li><a href="#projects">Projets</a></li>
+        <li><a href="#experience">Expérience</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <a href="cv.pdf" class="nav-cta" download aria-label="Télécharger mon CV">
+        ↓ CV
+      </a>
+
+    </nav>
+  </header>
+
+  <!-- ════════════════════════════════
+       HERO
+       ════════════════════════════════ -->
+  <section id="hero" aria-label="Introduction">
+
+    <!-- Éléments décoratifs de fond -->
+    <div class="hero-glow hero-glow--right" aria-hidden="true"></div>
+    <div class="hero-glow hero-glow--left" aria-hidden="true"></div>
+    <div class="grid-bg" aria-hidden="true"></div>
+
+    <div class="hero-content">
+
+      <p class="hero-tag">
+        <span class="hero-tag-dot" aria-hidden="true"></span>
+        Disponible pour des missions
+      </p>
+
+      <h1 class="hero-title">
+        <span class="hero-name">Wendemmi Bruno SAM </span>
+        <span class="hero-role hero-role--accent">Développeur</span>
+        <span class="hero-role hero-role--dim">Full-stack &amp; Mobile</span>
+      </h1>
+
+      <p class="hero-desc">
+        Je conçois des applications web robustes, des solutions numériques
+        et des apps mobiles sur mésure. Django · React · Flutter · PostGIS · WebMapping.
+      </p>
+
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn--primary">→ Voir mes projets</a>
+        <a href="#contact" class="btn btn--outline">✉ Me contacter</a>
+      </div>
+
+      <div class="hero-stats" aria-label="Statistiques">
+        <div class="stat">
+          <span class="stat-num" id="counter-years" data-target="5">0</span>
+          <span class="stat-suffix">+</span>
+          <p class="stat-lbl">Années d'expérience</p>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat">
+          <span class="stat-num" id="counter-projects" data-target="30">0</span>
+          <span class="stat-suffix">+</span>
+          <p class="stat-lbl">Projets livrés</p>
+        </div>
+        <div class="stat-divider" aria-hidden="true"></div>
+        <div class="stat">
+          <span class="stat-num" id="counter-clients" data-target="20">0</span>
+          <span class="stat-suffix">+</span>
+          <p class="stat-lbl">Clients satisfaits</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="scroll-hint" aria-hidden="true">
+      <span>scroll</span>
+      <span class="scroll-arrow">↓</span>
+    </div>
+
+  </section>
+
+  <!-- ════════════════════════════════
+       À PROPOS
+       ════════════════════════════════ -->
+  <section id="about" aria-labelledby="about-title">
+    <div class="section-inner">
+
+      <div class="about-grid">
+
+        <!-- Avatar -->
+        <div class="about-avatar-wrap">
+          <div class="about-avatar" aria-label="Photo de profil">
+            <div class="about-avatar-ring" aria-hidden="true"></div>
+            <div class="about-avatar-inner">
+              <!-- Remplacer par <img src="photo.jpg" alt="Wendemmi Bruno SAM"> si vous avez une photo -->
+              <span class="about-initials">VN</span>
+            </div>
+          </div>
+
+          <!-- Badges flottants -->
+          <div class="about-badge about-badge--top" aria-hidden="true">
+            🌍 Ouagadougou, BF
+          </div>
+          <div class="about-badge about-badge--bottom" aria-hidden="true">
+            ⚡ Disponible
+          </div>
+        </div>
+
+        <!-- Texte -->
+        <div class="about-text">
+          <p class="section-tag" aria-hidden="true">À propos</p>
+          <h2 class="section-title" id="about-title">
+            Passionné par le <br>
+            <span class="text-accent">code &amp; la cartographie</span>
+          </h2>
+
+          <p>
+            Développeur <strong>Full-stack &amp; Mobile</strong> basé à
+            <strong>Ouagadougou, Burkina Faso</strong>, je combine expertise web
+            et compétences géospatiales pour créer des solutions numériques
+            à forte valeur ajoutée pour l'Afrique de l'Ouest.
+          </p>
+
+          <p>
+            Spécialisé en <strong>Django 5</strong>, <strong>React</strong>,
+            <strong>Flutter</strong> et <strong>PostGIS</strong>, je développe
+            des plateformes SaaS, des systèmes d'information géographique web (WebGIS)
+            et des applications mobiles multiplateformes.
+          </p>
+
+          <p>
+            Co-fondateur d'<strong>Innov Geomatics Consulting</strong>, je forme
+            également des professionnels aux technologies GIS, télédétection et webmapping.
+          </p>
+
+          <!-- Chips de technologies -->
+          <ul class="about-chips" aria-label="Technologies principales" role="list">
+            <li class="chip">Django 5</li>
+            <li class="chip">React</li>
+            <li class="chip">Flutter</li>
+            <li class="chip">PostGIS</li>
+            <li class="chip">QGIS</li>
+            <li class="chip">Leaflet</li>
+            <li class="chip">Python</li>
+            <li class="chip">PostgreSQL</li>
+            <li class="chip">Docker</li>
+            <li class="chip">Wagtail</li>
+            <li class="chip">Tailwind CSS</li>
+            <li class="chip">DRF</li>
+          </ul>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       COMPÉTENCES
+       ════════════════════════════════ -->
+  <section id="skills" aria-labelledby="skills-title">
+    <div class="section-inner">
+
+      <p class="section-tag" aria-hidden="true">Compétences</p>
+      <h2 class="section-title" id="skills-title">Stack <span class="text-accent">technique</span></h2>
+
+      <div class="skills-grid">
+
+        <article class="skill-card" aria-label="Développement Web">
+          <div class="skill-icon" aria-hidden="true">🌐</div>
+          <h3 class="skill-name">Développement Web</h3>
+          <ul class="skill-tags" role="list">
+            <li class="skill-tag">Django 5</li>
+            <li class="skill-tag">Wagtail CMS</li>
+            <li class="skill-tag">DRF</li>
+            <li class="skill-tag">React</li>
+            <li class="skill-tag">HTMX</li>
+            <li class="skill-tag">Alpine.js</li>
+            <li class="skill-tag">Tailwind CSS</li>
+            <li class="skill-tag">HTML / CSS / JS</li>
+          </ul>
+        </article>
+
+        <article class="skill-card" aria-label="Développement Mobile">
+          <div class="skill-icon" aria-hidden="true">📱</div>
+          <h3 class="skill-name">Développement Mobile</h3>
+          <ul class="skill-tags" role="list">
+            <li class="skill-tag skill-tag--blue">Flutter</li>
+            <li class="skill-tag skill-tag--blue">Dart</li>
+            <li class="skill-tag skill-tag--blue">Riverpod</li>
+            <li class="skill-tag skill-tag--blue">flutter_map</li>
+            <li class="skill-tag skill-tag--blue">Dio</li>
+            <li class="skill-tag skill-tag--blue">Hive</li>
+            <li class="skill-tag skill-tag--blue">fl_chart</li>
+            <li class="skill-tag skill-tag--blue">Android / iOS</li>
+          </ul>
+        </article>
+
+        <article class="skill-card" aria-label="GIS et Géospatial">
+          <div class="skill-icon" aria-hidden="true">🗺️</div>
+          <h3 class="skill-name">GIS &amp; Géospatial</h3>
+          <ul class="skill-tags" role="list">
+            <li class="skill-tag skill-tag--gold">QGIS</li>
+            <li class="skill-tag skill-tag--gold">PostGIS</li>
+            <li class="skill-tag skill-tag--gold">Leaflet.js</li>
+            <li class="skill-tag skill-tag--gold">OpenLayers</li>
+            <li class="skill-tag skill-tag--gold">QGIS2Web</li>
+            <li class="skill-tag skill-tag--gold">GeoServer</li>
+            <li class="skill-tag skill-tag--gold">GDAL / OGR</li>
+            <li class="skill-tag skill-tag--gold">ArcGIS</li>
+          </ul>
+        </article>
+
+        <article class="skill-card" aria-label="Base de données et backend">
+          <div class="skill-icon" aria-hidden="true">🗄️</div>
+          <h3 class="skill-name">Base de données &amp; Backend</h3>
+          <ul class="skill-tags" role="list">
+            <li class="skill-tag">PostgreSQL</li>
+            <li class="skill-tag">PostGIS</li>
+            <li class="skill-tag">Redis</li>
+            <li class="skill-tag">Celery</li>
+            <li class="skill-tag">Django ORM</li>
+            <li class="skill-tag">REST API</li>
+            <li class="skill-tag">JWT / OAuth2</li>
+            <li class="skill-tag">django-tenants</li>
+          </ul>
+        </article>
+
+        <article class="skill-card" aria-label="Infrastructure et DevOps">
+          <div class="skill-icon" aria-hidden="true">☁️</div>
+          <h3 class="skill-name">Infrastructure &amp; DevOps</h3>
+          <ul class="skill-tags" role="list">
+            <li class="skill-tag skill-tag--blue">Linux (Ubuntu)</li>
+            <li class="skill-tag skill-tag--blue">Nginx</li>
+            <li class="skill-tag skill-tag--blue">Gunicorn</li>
+            <li class="skill-tag skill-tag--blue">Docker</li>
+            <li class="skill-tag skill-tag--blue">Cloudflare R2</li>
+            <li class="skill-tag skill-tag--blue">GitHub</li>
+            <li class="skill-tag skill-tag--blue">VPS</li>
+          </ul>
+        </article>
+
+        <article class="skill-card" aria-label="Paiements et intégrations">
+          <div class="skill-icon" aria-hidden="true">💳</div>
+          <h3 class="skill-name">Paiements &amp; APIs</h3>
+          <ul class="skill-tags" role="list">
+            <li class="skill-tag skill-tag--gold">CinetPay</li>
+            <li class="skill-tag skill-tag--gold">PayDunya</li>
+            <li class="skill-tag skill-tag--gold">Stripe</li>
+            <li class="skill-tag skill-tag--gold">Orange Money</li>
+            <li class="skill-tag skill-tag--gold">Moov Money</li>
+            <li class="skill-tag skill-tag--gold">OSRM</li>
+          </ul>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       PROJETS
+       ════════════════════════════════ -->
+  <section id="projects" aria-labelledby="projects-title">
+    <div class="section-inner">
+
+      <p class="section-tag" aria-hidden="true">Projets</p>
+      <h2 class="section-title" id="projects-title">
+        Réalisations <span class="text-accent">récentes</span>
+      </h2>
+
+      <div class="projects-grid">
+
+        <!-- Projet featured -->
+        <article class="proj-card proj-card--featured" aria-label="Projet CacaoTrack">
+          <div class="proj-visual" aria-hidden="true">
+            <div class="proj-visual-pattern"></div>
+            <span class="proj-visual-icon">🍫</span>
+            <span class="proj-badge">Featured</span>
+          </div>
+          <div class="proj-body">
+            <h3 class="proj-name">CacaoTrack</h3>
+            <p class="proj-desc">
+              Plateforme SaaS multi-tenant de traçabilité de la chaîne d'approvisionnement
+              du cacao en Côte d'Ivoire. Cartographie temps réel, optimisation de tournées
+              (OSRM), tableaux de bord analytiques et app mobile Flutter.
+            </p>
+            <ul class="proj-stack" role="list" aria-label="Technologies utilisées">
+              <li>Django 5</li>
+              <li>PostGIS</li>
+              <li>React</li>
+              <li>Leaflet</li>
+              <li>DRF</li>
+              <li>Celery</li>
+              <li>Flutter</li>
+              <li>OSRM</li>
+            </ul>
+            <div class="proj-links">
+              <a href="#" class="proj-link" aria-label="Voir le projet CacaoTrack">→ Voir le projet</a>
+              <a href="#" class="proj-link" aria-label="Code source GitHub">⌥ GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Projet 2 -->
+        <article class="proj-card" aria-label="Projet Innov Geomatics">
+          <div class="proj-visual" aria-hidden="true">
+            <div class="proj-visual-pattern"></div>
+            <span class="proj-visual-icon">🌍</span>
+          </div>
+          <div class="proj-body">
+            <h3 class="proj-name">Innov Geomatics Website &amp; LMS</h3>
+            <p class="proj-desc">
+              Site vitrine &amp; plateforme e-learning pour cabinet GIS.
+              Paiements CinetPay/Stripe, certificats PDF WeasyPrint,
+              forums par formation, quizzes et suivi de progression.
+            </p>
+            <ul class="proj-stack" role="list">
+              <li>Django 5</li>
+              <li>Wagtail</li>
+              <li>HTMX</li>
+              <li>Alpine.js</li>
+              <li>Tailwind</li>
+            </ul>
+            <div class="proj-links">
+              <a href="https://innovgeomatic.com" class="proj-link" target="_blank" rel="noopener">→ innovgeomatic.com</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Projet 3 -->
+        <article class="proj-card" aria-label="Projet CacaoTrack Flutter App">
+          <div class="proj-visual" aria-hidden="true">
+            <div class="proj-visual-pattern"></div>
+            <span class="proj-visual-icon">📱</span>
+          </div>
+          <div class="proj-body">
+            <h3 class="proj-name">CacaoTrack — App Mobile</h3>
+            <p class="proj-desc">
+              Application Flutter Android/iOS pour les coopératives cacao.
+              Collecte terrain offline, carte OpenStreetMap,
+              tournées avec réordonnancement drag-and-drop.
+            </p>
+            <ul class="proj-stack" role="list">
+              <li>Flutter</li>
+              <li>Riverpod</li>
+              <li>flutter_map</li>
+              <li>Hive</li>
+              <li>Dio</li>
+            </ul>
+            <div class="proj-links">
+              <a href="#" class="proj-link">→ Voir la démo</a>
+              <a href="#" class="proj-link">⌥ GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Projet 4 -->
+        <article class="proj-card" aria-label="Projet Factur Pro">
+          <div class="proj-visual" aria-hidden="true">
+            <div class="proj-visual-pattern"></div>
+            <span class="proj-visual-icon">📄</span>
+          </div>
+          <div class="proj-body">
+            <h3 class="proj-name">Factur•Pro &amp; Reçu•Pro</h3>
+            <p class="proj-desc">
+              Suite d'outils de gestion documentaire standalone.
+              Générateur de factures et reçus avec export PDF, thèmes,
+              logo, signature — 100% offline, sans dépendance.
+            </p>
+            <ul class="proj-stack" role="list">
+              <li>HTML5</li>
+              <li>CSS3</li>
+              <li>JavaScript</li>
+              <li>jsPDF</li>
+              <li>Canvas API</li>
+            </ul>
+            <div class="proj-links">
+              <a href="#" class="proj-link">→ Voir la démo</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Projet 5 -->
+        <article class="proj-card" aria-label="Projet WebMapping">
+          <div class="proj-visual" aria-hidden="true">
+            <div class="proj-visual-pattern"></div>
+            <span class="proj-visual-icon">🗺️</span>
+          </div>
+          <div class="proj-body">
+            <h3 class="proj-name">WebMapping QGIS2Web</h3>
+            <p class="proj-desc">
+              Cartes interactives WebGIS exportées depuis QGIS,
+              hébergées sur Cloudflare R2. Optimisation de fichiers
+              JS volumineux (~2 Go) via script Python/boto3.
+            </p>
+            <ul class="proj-stack" role="list">
+              <li>QGIS</li>
+              <li>Leaflet.js</li>
+              <li>Cloudflare R2</li>
+              <li>Python</li>
+              <li>boto3</li>
+            </ul>
+            <div class="proj-links">
+              <a href="#" class="proj-link">→ Voir la carte</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       EXPÉRIENCE
+       ════════════════════════════════ -->
+  <section id="experience" aria-labelledby="exp-title">
+    <div class="section-inner">
+
+      <p class="section-tag" aria-hidden="true">Parcours</p>
+      <h2 class="section-title" id="exp-title">
+        Expérience <span class="text-accent">professionnelle</span>
+      </h2>
+
+      <ol class="timeline" aria-label="Parcours professionnel" reversed>
+
+        <li class="tl-item">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <time class="tl-period" datetime="2022">2022 — Présent</time>
+          <h3 class="tl-role">Co-fondateur &amp; Développeur Principal</h3>
+          <p class="tl-org">Innov Geomatics Consulting · Ouagadougou, Burkina Faso</p>
+          <ul class="tl-desc">
+            <li>Développement de solutions webmapping et SIG pour clients publics et ONG</li>
+            <li>Formation de professionnels en QGIS, ArcGIS, télédétection et webmapping</li>
+            <li>Conception et déploiement de plateformes Django sur VPS (Nginx/Gunicorn)</li>
+            <li>Développement d'applications mobiles Flutter multiplateformes</li>
+            <li>Gestion de projets MEAL avec outils géospatiaux</li>
+          </ul>
+        </li>
+
+        <li class="tl-item">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <time class="tl-period" datetime="2021">2021 — 2022</time>
+          <h3 class="tl-role">Développeur Full-stack Freelance</h3>
+          <p class="tl-org">Indépendant · Afrique de l'Ouest</p>
+          <ul class="tl-desc">
+            <li>Développement d'applications Django pour PME et associations</li>
+            <li>Intégration de paiements mobiles (CinetPay, Orange Money)</li>
+            <li>Cartes interactives Leaflet.js et OpenStreetMap</li>
+            <li>Développement d'interfaces Flutter pour clients mobiles</li>
+          </ul>
+        </li>
+
+        <li class="tl-item">
+          <div class="tl-dot" aria-hidden="true"></div>
+          <time class="tl-period" datetime="2019">2019 — 2021</time>
+          <h3 class="tl-role">Technicien SIG &amp; Télédétection</h3>
+          <p class="tl-org">Projet de développement rural · Burkina Faso</p>
+          <ul class="tl-desc">
+            <li>Collecte et traitement de données géospatiales terrain</li>
+            <li>Production de cartes thématiques avec QGIS et ArcGIS</li>
+            <li>Analyse d'images satellitaires pour suivi de la végétation</li>
+          </ul>
+        </li>
+
+      </ol>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       CONTACT
+       ════════════════════════════════ -->
+  <section id="contact" aria-labelledby="contact-title">
+    <div class="section-inner">
+
+      <p class="section-tag" aria-hidden="true">Contact</p>
+      <h2 class="section-title" id="contact-title">
+        Travaillons <span class="text-accent">ensemble</span>
+      </h2>
+
+      <div class="contact-grid">
+
+        <!-- Infos de contact -->
+        <div class="contact-info">
+          <p>
+            Vous avez un projet web, une application mobile, une solution GIS
+            ou une formation à planifier ? Je suis disponible pour des missions
+            freelance et des collaborations long terme.
+          </p>
+
+          <ul class="contact-links" role="list">
+            <li>
+              <a href="mailto:contact@innovgeomatic.com" class="contact-link">
+                <span class="contact-link-icon" aria-hidden="true">✉</span>
+                <span>contact@innovgeomatic.com</span>
+              </a>
+            </li>
+            <li>
+              <a href="tel:+22644710264" class="contact-link">
+                <span class="contact-link-icon" aria-hidden="true">📞</span>
+                <span>+226 44 71 02 64</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://innovgeomatic.com" class="contact-link" target="_blank" rel="noopener">
+                <span class="contact-link-icon" aria-hidden="true">🌐</span>
+                <span>innovgeomatic.com</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/" class="contact-link" target="_blank" rel="noopener">
+                <span class="contact-link-icon" aria-hidden="true">⌥</span>
+                <span>GitHub</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://linkedin.com/" class="contact-link" target="_blank" rel="noopener">
+                <span class="contact-link-icon" aria-hidden="true">💼</span>
+                <span>LinkedIn</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Formulaire -->
+        <div class="contact-form-wrap">
+          <form class="contact-form" id="contact-form" novalidate>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="form-name">Votre nom</label>
+                <input
+                  class="form-input"
+                  type="text"
+                  id="form-name"
+                  name="name"
+                  placeholder="Jean Dupont"
+                  autocomplete="name"
+                  required>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="form-email">Email</label>
+                <input
+                  class="form-input"
+                  type="email"
+                  id="form-email"
+                  name="email"
+                  placeholder="ouedraogo@gmail.com"
+                  autocomplete="email"
+                  required>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="form-subject">Sujet</label>
+              <input
+                class="form-input"
+                type="text"
+                id="form-subject"
+                name="subject"
+                placeholder="Ex: Développement application mobile">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" for="form-message">Message</label>
+              <textarea
+                class="form-textarea"
+                id="form-message"
+                name="message"
+                rows="5"
+                placeholder="Décrivez votre projet ou votre demande…"
+                required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary form-submit" id="form-btn">
+              → Envoyer le message
+            </button>
+
+            <p class="form-feedback" id="form-feedback" role="status" aria-live="polite"></p>
+
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       FOOTER
+       ════════════════════════════════ -->
+  <footer>
+    <div class="footer-inner">
+
+      <p class="footer-copy">
+        © 2026 <span class="text-accent">Wendemmi Bruno SAM</span>
+        · Développeur Full-stack &amp; Mobile
+      </p>
+
+      <nav aria-label="Liens réseaux sociaux">
+        <ul class="footer-social" role="list">
+          <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+          <li><a href="https://innovgeomatic.com" target="_blank" rel="noopener">innovgeomatic.com</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </footer>
+
+  
+  <script src="main.js"></script>
+
+</body>
+</html>
