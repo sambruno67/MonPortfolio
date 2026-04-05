@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>...</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root{
+  --night:#0d1117;
+  --navy:#0f1f3d;
+  --steel:#1e2d45;
+  --slate:#2a3f5f;
+  --ice:#c8d8f0;
+  --frost:#e8eef8;
+  --cyan:#4fc3f7;
+  --silver:#8fa3be;
+  --mist:#b0c4de;
+  --white:#f0f4fa;
+  --border:#1e3250;
+  --form-bg:#0a1628;
+}
+
+body{font-family:'DM Mono',monospace;background:var(--night);color:var(--frost);min-height:100vh;display:flex;flex-direction:column}
+
+/* ── TOP BAR ── */
+.bar{
+  height:52px;background:var(--navy);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;position:sticky;top:0;z-index:300;
+}
+.bar-logo{
+  font-family:'Syne',sans-serif;font-size:.95rem;font-weight:800;
+  letter-spacing:3px;text-transform:uppercase;color:var(--white);
+}
+.bar-logo em{color:var(--cyan);font-style:normal}
+.bar-actions{display:flex;gap:10px}
+.btn-dl{
+  background:var(--cyan);color:var(--night);border:none;
+  padding:7px 20px;font-family:'Syne',sans-serif;font-size:.72rem;
+  font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;
+  clip-path:polygon(6px 0%,100% 0%,calc(100% - 6px) 100%,0% 100%);
+  transition:background .2s;
+}
+.btn-dl:hover{background:#81d4fa}
+
+/* ── WORKSPACE ── */
+.workspace{display:grid;grid-template-columns:360px 1fr;flex:1;min-height:calc(100vh - 52px)}
+
+/* ── FORM ── */
+.fp{background:var(--form-bg);border-right:1px solid var(--border);overflow-y:auto;max-height:calc(100vh - 52px);position:sticky;top:52px}
+
+.tabs{display:flex;background:var(--navy);border-bottom:1px solid var(--border);overflow-x:auto}
+.tab{
+  padding:11px 13px;font-size:.62rem;font-weight:500;
+  text-transform:uppercase;letter-spacing:1.2px;cursor:pointer;
+  color:var(--silver);border-bottom:2px solid transparent;white-space:nowrap;transition:all .18s;
+  font-family:'DM Mono',monospace;
+}
+.tab.on{border-bottom-color:var(--cyan);color:var(--white)}
+
+.tc{display:none;padding:20px 18px}
+.tc.on{display:block}
+
+.fg{margin-bottom:14px}
+.fg label{display:block;font-size:.6rem;text-transform:uppercase;letter-spacing:1.2px;color:var(--silver);margin-bottom:5px;font-weight:500}
+.fg input,.fg textarea,.fg select{
+  width:100%;border:1px solid var(--border);padding:8px 10px;
+  font-family:'DM Mono',monospace;font-size:.8rem;color:var(--frost);
+  background:var(--steel);outline:none;resize:vertical;transition:border-color .2s;
+}
+.fg input:focus,.fg textarea:focus{border-color:var(--cyan);background:var(--slate)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--silver);opacity:.5}
+.fg textarea{min-height:68px;line-height:1.55}
+.fg select{cursor:pointer}
+.fg select option{background:var(--navy)}
+
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+.slabel{
+  font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:2px;color:var(--cyan);
+  margin-bottom:14px;padding-bottom:6px;
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;
+}
+.slabel::before{content:'';display:block;width:14px;height:2px;background:var(--cyan)}
+
+.ecard{background:var(--steel);border:1px solid var(--border);padding:13px;margin-bottom:9px;position:relative}
+.ecard .rm{position:absolute;top:7px;right:7px;background:none;border:none;color:var(--silver);cursor:pointer;font-size:.95rem;padding:2px 5px;transition:color .2s}
+.ecard .rm:hover{color:#f87171}
+
+.addbtn{
+  width:100%;border:1px dashed var(--border);background:none;color:var(--silver);
+  padding:8px;font-family:'DM Mono',monospace;font-size:.72rem;cursor:pointer;
+  transition:all .2s;margin-top:3px;letter-spacing:.5px;
+}
+.addbtn:hover{border-color:var(--cyan);color:var(--cyan)}
+
+.skwrap{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.schip{
+  background:var(--slate);border:1px solid var(--border);
+  color:var(--ice);padding:3px 9px;font-size:.68rem;font-family:'DM Mono',monospace;
+  display:flex;align-items:center;gap:5px;letter-spacing:.5px;
+  clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);
+}
+.schip button{background:none;border:none;color:var(--silver);cursor:pointer;font-size:.8rem;padding:0}
+.schip button:hover{color:#f87171}
+.skrow{display:flex;gap:7px}
+.skrow input{flex:1}
+.skrow button{background:var(--cyan);color:var(--night);border:none;padding:8px 13px;cursor:pointer;font-size:1rem;font-weight:700;transition:background .2s}
+.skrow button:hover{background:#81d4fa}
+
+/* Photo */
+.photo-wrap{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px;background:var(--steel);border:1px dashed var(--border);cursor:pointer;transition:border-color .2s;margin-bottom:14px}
+.photo-wrap:hover{border-color:var(--cyan)}
+.photo-prev{width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid var(--cyan);display:none}
+.photo-ph{font-size:1.8rem;opacity:.4}
+.photo-lbl{font-size:.65rem;color:var(--silver);letter-spacing:.5px}
+
+/* Color */
+.cdots{display:flex;gap:7px;flex-wrap:wrap;margin-top:6px}
+.cdot{width:24px;height:24px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.cdot:hover{transform:scale(1.2)}
+.cdot.on{border-color:var(--cyan);box-shadow:0 0 8px var(--cyan)}
+
+/* ── PREVIEW ── */
+.pp{background:#0a0f1a;padding:28px;overflow-y:auto;display:flex;justify-content:center;align-items:flex-start}
+
+/* ══════════════════════════════
+   CV PAPER
+══════════════════════════════ */
+.cvp{
+  width:794px;min-height:1122px;
+  background:var(--cv-bg,#f0f4fa);
+  box-shadow:0 0 80px rgba(79,195,247,.12),0 20px 60px rgba(0,0,0,.6);
+  font-family:'DM Mono',monospace;
+  position:relative;overflow:hidden;
+  display:flex;flex-direction:column;
+}
+
+/* Geometric accent top bar */
+.cv-topbar{
+  height:8px;
+  background:linear-gradient(90deg,var(--cv-accent,#4fc3f7) 0%,var(--cv-accent2,#1e88e5) 50%,var(--cv-accent,#4fc3f7) 100%);
+}
+
+/* Hero header */
+.cv-hero{
+  background:var(--cv-dark,#0f1f3d);
+  padding:36px 48px 32px;
+  position:relative;
+  overflow:hidden;
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:24px;
+  align-items:center;
+}
+.cv-hero::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:280px;height:280px;border-radius:50%;
+  border:40px solid rgba(79,195,247,.06);
+}
+.cv-hero::after{
+  content:'';position:absolute;bottom:-40px;left:200px;
+  width:160px;height:160px;border-radius:50%;
+  border:20px solid rgba(79,195,247,.04);
+}
+
+.cv-hero-text{position:relative;z-index:1}
+.cv-line1{
+  font-family:'Syne',sans-serif;font-size:32pt;font-weight:800;
+  color:var(--cv-white,#f0f4fa);letter-spacing:-1px;line-height:.95;
+  text-transform:uppercase;
+}
+.cv-line1 span{color:var(--cv-accent,#4fc3f7)}
+.cv-line2{
+  font-family:'Instrument Serif',serif;font-size:14pt;font-weight:400;
+  font-style:italic;color:var(--cv-accent,#4fc3f7);
+  margin-top:8px;letter-spacing:.5px;
+}
+.cv-contact-strip{
+  display:flex;flex-wrap:wrap;gap:14px;margin-top:16px;
+}
+.cv-ci{
+  display:flex;align-items:center;gap:5px;
+  font-size:7pt;color:rgba(200,216,240,.7);letter-spacing:.5px;
+}
+.cv-ci-dot{width:4px;height:4px;border-radius:50%;background:var(--cv-accent,#4fc3f7);flex-shrink:0}
+
+/* Photo circle */
+.cv-photo-zone{position:relative;z-index:1;flex-shrink:0}
+.cv-photo-ring{
+  width:110px;height:110px;border-radius:50%;
+  border:3px solid var(--cv-accent,#4fc3f7);
+  overflow:hidden;background:rgba(79,195,247,.1);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 0 30px rgba(79,195,247,.2);
+}
+.cv-photo-ring img{width:100%;height:100%;object-fit:cover}
+.cv-photo-ph{font-size:2.5rem;opacity:.25;color:var(--cv-accent,#4fc3f7)}
+
+/* Body */
+.cv-body{
+  display:grid;grid-template-columns:220px 1fr;
+  flex:1;
+}
+
+/* Left col */
+.cv-left{
+  background:var(--cv-left,#e2eaf4);
+  padding:28px 20px;
+  border-right:2px solid var(--cv-accent,#4fc3f7);
+  position:relative;
+}
+.cv-left::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--cv-accent,#4fc3f7);opacity:.3;
+}
+
+.cv-lsec{margin-bottom:22px}
+.cv-ltitle{
+  font-family:'Syne',sans-serif;font-size:7pt;font-weight:700;
+  text-transform:uppercase;letter-spacing:2.5px;
+  color:var(--cv-dark,#0f1f3d);margin-bottom:10px;
+  display:flex;align-items:center;gap:6px;
+}
+.cv-ltitle::after{content:'';flex:1;height:1px;background:var(--cv-accent,#4fc3f7);opacity:.4}
+
+.cv-litem{
+  display:flex;align-items:flex-start;gap:6px;
+  font-size:7.5pt;color:var(--cv-dark,#0f1f3d);margin-bottom:6px;line-height:1.4;
+}
+.cv-licon{color:var(--cv-accent,#4fc3f7);flex-shrink:0;margin-top:1px;font-size:8pt}
+
+.cv-edu-block{margin-bottom:10px}
+.cv-edu-school{font-size:8pt;font-weight:500;color:var(--cv-dark,#0f1f3d);font-family:'Syne',sans-serif}
+.cv-edu-deg{font-size:7pt;color:var(--cv-dark2,#2a3f5f);line-height:1.4;margin-top:1px}
+.cv-edu-dates{font-size:6.5pt;color:var(--cv-accent,#4fc3f7);margin-top:2px;letter-spacing:.5px}
+
+.cv-skill-item{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:7px;
+}
+.cv-skill-name{font-size:7.5pt;color:var(--cv-dark,#0f1f3d)}
+.cv-skill-bar{height:3px;flex:1;margin-left:8px;background:rgba(79,195,247,.2);border-radius:2px;overflow:hidden}
+.cv-skill-fill{height:100%;background:var(--cv-accent,#4fc3f7);border-radius:2px;width:70%}
+
+.cv-lang-item{display:flex;justify-content:space-between;margin-bottom:5px;font-size:7.5pt;color:var(--cv-dark,#0f1f3d)}
+.cv-lang-lvl{color:var(--cv-accent,#4fc3f7);font-size:7pt}
+
+/* Right col */
+.cv-right{padding:28px 32px;background:var(--cv-bg,#f0f4fa)}
+
+.cv-sec{margin-bottom:22px}
+.cv-rtitle{
+  font-family:'Syne',sans-serif;font-size:7.5pt;font-weight:700;
+  text-transform:uppercase;letter-spacing:2.5px;
+  color:var(--cv-dark,#0f1f3d);margin-bottom:12px;
+  padding-bottom:5px;
+  border-bottom:2px solid var(--cv-accent,#4fc3f7);
+  display:flex;align-items:center;gap:7px;
+}
+.cv-rtitle-num{
+  font-size:16pt;font-family:'Syne',sans-serif;font-weight:800;
+  color:var(--cv-accent,#4fc3f7);opacity:.18;line-height:.8;
+  margin-right:2px;
+}
+
+.cv-about{font-size:8pt;line-height:1.7;color:var(--cv-dark2,#2a3f5f)}
+
+.cv-exp{margin-bottom:14px;padding-left:10px;border-left:2px solid rgba(79,195,247,.2);position:relative}
+.cv-exp::before{
+  content:'';position:absolute;top:5px;left:-5px;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--cv-accent,#4fc3f7);
+}
+.cv-exp-hdr{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1px}
+.cv-exp-role{font-family:'Syne',sans-serif;font-size:9pt;font-weight:700;color:var(--cv-dark,#0f1f3d)}
+.cv-exp-date{
+  font-size:6.5pt;letter-spacing:.5px;white-space:nowrap;margin-left:8px;
+  background:var(--cv-accent,#4fc3f7);color:var(--cv-dark,#0f1f3d);
+  padding:2px 6px;font-weight:600;flex-shrink:0;
+  clip-path:polygon(4px 0%,100% 0%,calc(100% - 4px) 100%,0% 100%);
+}
+.cv-exp-co{font-size:7.5pt;color:var(--cv-accent,#4fc3f7);margin-bottom:3px;letter-spacing:.5px}
+.cv-exp-desc{font-size:7.5pt;line-height:1.6;color:var(--cv-dark2,#2a3f5f)}
+
+.cv-refs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cv-ref{background:var(--cv-refbg,rgba(15,31,61,.06));padding:10px;border-left:2px solid var(--cv-accent,#4fc3f7)}
+.cv-ref-name{font-family:'Syne',sans-serif;font-size:8.5pt;font-weight:700;color:var(--cv-dark,#0f1f3d)}
+.cv-ref-co{font-size:7pt;color:var(--cv-accent,#4fc3f7);margin-bottom:5px;letter-spacing:.5px}
+.cv-ref-line{font-size:7pt;color:var(--cv-dark2,#2a3f5f);margin-bottom:2px}
+.cv-ref-line b{font-weight:600}
+
+.cv-empty{font-size:7.5pt;color:rgba(15,31,61,.25);font-style:italic}
+
+@media print{
+  .bar,.fp{display:none!important}
+  .workspace{display:block}
+  .pp{background:none;padding:0}
+  .cvp{box-shadow:none;width:100%}
+  body{background:white}
+}
+</style>
+</head>
+<body>
+
+<header class="bar">
+  <div class="bar-logo">SAM <em>Bruno</em></div>
+  <div class="bar-actions">
+    <button class="btn-dl" onclick="window.print()">⇩ Exporter PDF</button>
+  </div>
+</header>
+
+<div class="workspace">
+
+  <!-- FORM -->
+  <div class="fp">
+    <div class="tabs">
+      <div class="tab on" onclick="showTab('info')">Profil</div>
+      <div class="tab" onclick="showTab('exp')">Expériences</div>
+      <div class="tab" onclick="showTab('edu')">Formation</div>
+      <div class="tab" onclick="showTab('sk')">Compétences</div>
+      <div class="tab" onclick="showTab('ref')">Références</div>
+      <div class="tab" onclick="showTab('sig')">Signature</div>
+      <div class="tab" onclick="showTab('des')">Design</div>
+    </div>
+
+    <!-- PROFIL -->
+    <div class="tc on" id="tab-info">
+      <div class="slabel">Identité</div>
+      <label class="photo-wrap" onclick="document.getElementById('ph-inp').click()">
+        <img class="photo-prev" id="ph-prev" src="" alt="">
+        <div class="photo-ph" id="ph-ph">👤</div>
+        <div class="photo-lbl">Cliquer pour ajouter une photo</div>
+        <input type="file" id="ph-inp" accept="image/*" style="display:none" onchange="doPhoto(this)">
+      </label>
+      <div class="fr">
+        <div class="fg"><label>Prénom</label><input id="f-prenom" placeholder="Alfredo" oninput="render()"></div>
+        <div class="fg"><label>Nom</label><input id="f-nom" placeholder="Torres" oninput="render()"></div>
+      </div>
+      <div class="fg"><label>Titre / Poste</label><input id="f-titre" placeholder="Marketing Manager" oninput="render()"></div>
+      <div class="fg"><label>À propos</label><textarea id="f-about" placeholder="Décrivez votre profil en quelques phrases…" oninput="render()"></textarea></div>
+      <div class="fr">
+        <div class="fg"><label>Téléphone</label><input id="f-tel" placeholder="+221 77 000 0000" oninput="render()"></div>
+        <div class="fg"><label>Email</label><input id="f-email" placeholder="email@mail.com" oninput="render()"></div>
+      </div>
+      <div class="fr">
+        <div class="fg"><label>Ville / Pays</label><input id="f-ville" placeholder="Dakar, Sénégal" oninput="render()"></div>
+        <div class="fg"><label>LinkedIn / Site</label><input id="f-web" placeholder="linkedin.com/in/..." oninput="render()"></div>
+      </div>
+    </div>
+
+    <!-- EXPÉRIENCES -->
+    <div class="tc" id="tab-exp">
+      <div class="slabel">Expériences</div>
+      <div id="exp-list"></div>
+      <button class="addbtn" onclick="addExp()">+ Nouvelle expérience</button>
+    </div>
+
+    <!-- FORMATION -->
+    <div class="tc" id="tab-edu">
+      <div class="slabel">Formation</div>
+      <div id="edu-list"></div>
+      <button class="addbtn" onclick="addEdu()">+ Nouvelle formation</button>
+    </div>
+
+    <!-- COMPÉTENCES -->
+    <div class="tc" id="tab-sk">
+      <div class="slabel">Compétences</div>
+      <div class="skrow">
+        <input id="sk-inp" placeholder="Ex: Photoshop, Python…" onkeydown="if(event.key==='Enter')addSk()">
+        <button onclick="addSk()">+</button>
+      </div>
+      <div class="skwrap" id="sk-wrap"></div>
+      <div style="margin-top:22px">
+        <div class="slabel">Langues</div>
+        <div id="lang-list"></div>
+        <button class="addbtn" onclick="addLang()">+ Nouvelle langue</button>
+      </div>
+    </div>
+
+    <!-- RÉFÉRENCES -->
+    <div class="tc" id="tab-ref">
+      <div class="slabel">Références</div>
+      <div id="ref-list"></div>
+      <button class="addbtn" onclick="addRef()">+ Nouvelle référence</button>
+    </div>
+
+    <!-- SIGNATURE -->
+    <div class="tc" id="tab-sig">
+      <div class="slabel">Signature</div>
+
+      <!-- Mode selector -->
+      <div style="display:flex;gap:0;margin-bottom:16px;border:1px solid var(--border);overflow:hidden">
+        <button id="sig-mode-draw" onclick="setSigMode('draw')"
+          style="flex:1;padding:8px;font-family:'DM Mono',monospace;font-size:.68rem;font-weight:600;
+          text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:all .2s;border:none;
+          background:var(--cyan);color:var(--night)">✏ Dessiner</button>
+        <button id="sig-mode-upload" onclick="setSigMode('upload')"
+          style="flex:1;padding:8px;font-family:'DM Mono',monospace;font-size:.68rem;font-weight:600;
+          text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:all .2s;border:none;
+          background:var(--steel);color:var(--silver)">⇪ Importer</button>
+      </div>
+
+      <!-- DRAW MODE -->
+      <div id="sig-draw-panel">
+        <div style="font-size:.65rem;color:var(--silver);margin-bottom:6px;letter-spacing:.5px">Dessinez votre signature dans le cadre ci-dessous</div>
+        <canvas id="sig-canvas" width="316" height="120"
+          style="width:100%;height:120px;background:#fff;border:1px solid var(--border);cursor:crosshair;display:block;touch-action:none"></canvas>
+        <div style="display:flex;gap:7px;margin-top:8px">
+          <button onclick="clearSig()"
+            style="flex:1;padding:7px;background:var(--steel);color:var(--silver);border:1px solid var(--border);
+            font-family:'DM Mono',monospace;font-size:.68rem;cursor:pointer;letter-spacing:.5px;transition:all .2s"
+            onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='var(--silver)'">✕ Effacer</button>
+          <button onclick="saveSig()"
+            style="flex:2;padding:7px;background:var(--cyan);color:var(--night);border:none;
+            font-family:'DM Mono',monospace;font-size:.68rem;font-weight:700;cursor:pointer;letter-spacing:.5px;transition:all .2s"
+            onmouseover="this.style.background='#81d4fa'" onmouseout="this.style.background='var(--cyan)'">✓ Appliquer au CV</button>
+        </div>
+        <div style="margin-top:10px">
+          <div style="font-size:.62rem;color:var(--silver);margin-bottom:5px;letter-spacing:.5px">Couleur du trait</div>
+          <div style="display:flex;gap:6px">
+            <div onclick="setPenColor('#0f1f3d',this)" style="width:22px;height:22px;background:#0f1f3d;border:2px solid var(--cyan);cursor:pointer;border-radius:50%" class="pen-dot"></div>
+            <div onclick="setPenColor('#1e88e5',this)" style="width:22px;height:22px;background:#1e88e5;border:2px solid transparent;cursor:pointer;border-radius:50%" class="pen-dot"></div>
+            <div onclick="setPenColor('#e53e3e',this)" style="width:22px;height:22px;background:#e53e3e;border:2px solid transparent;cursor:pointer;border-radius:50%" class="pen-dot"></div>
+            <div onclick="setPenColor('#2d3748',this)" style="width:22px;height:22px;background:#2d3748;border:2px solid transparent;cursor:pointer;border-radius:50%" class="pen-dot"></div>
+          </div>
+        </div>
+        <div style="margin-top:10px">
+          <div style="font-size:.62rem;color:var(--silver);margin-bottom:5px;letter-spacing:.5px">Épaisseur</div>
+          <input type="range" id="pen-size" min="1" max="6" value="2" oninput="penSize=+this.value"
+            style="width:100%;accent-color:var(--cyan)">
+        </div>
+      </div>
+
+      <!-- UPLOAD MODE -->
+      <div id="sig-upload-panel" style="display:none">
+        <label class="photo-wrap" onclick="document.getElementById('sig-file').click()" style="height:100px">
+          <div id="sig-upload-ph" style="font-size:1.5rem;opacity:.4">🖊</div>
+          <div class="photo-lbl">Cliquer pour importer une image de signature<br><span style="font-size:.58rem;opacity:.6">(PNG transparent recommandé)</span></div>
+          <input type="file" id="sig-file" accept="image/*" style="display:none" onchange="loadSigFile(this)">
+        </label>
+        <div id="sig-upload-preview" style="display:none;margin-top:8px;text-align:center">
+          <img id="sig-img-prev" style="max-height:80px;max-width:100%;border:1px solid var(--border);padding:6px;background:#fff">
+          <div style="display:flex;gap:7px;margin-top:7px">
+            <button onclick="removeSig()"
+              style="flex:1;padding:7px;background:var(--steel);color:var(--silver);border:1px solid var(--border);
+              font-family:'DM Mono',monospace;font-size:.68rem;cursor:pointer;letter-spacing:.5px"
+              onmouseover="this.style.color='#f87171'" onmouseout="this.style.color='var(--silver)'">✕ Supprimer</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Current sig preview -->
+      <div id="sig-status" style="margin-top:14px;font-size:.65rem;color:var(--silver);text-align:center;letter-spacing:.5px"></div>
+    </div>
+
+    <!-- DESIGN -->
+    <div class="tc" id="tab-des">
+      <div class="slabel">Couleur d'accentuation</div>
+      <div class="cdots">
+        <div class="cdot on"  style="background:#4fc3f7" onclick="setCol('#4fc3f7','#1e88e5',this)"></div>
+        <div class="cdot" style="background:#26c6da" onclick="setCol('#26c6da','#00838f',this)"></div>
+        <div class="cdot" style="background:#7c83fd" onclick="setCol('#7c83fd','#4a52e0',this)"></div>
+        <div class="cdot" style="background:#a78bfa" onclick="setCol('#a78bfa','#6d28d9',this)"></div>
+        <div class="cdot" style="background:#34d399" onclick="setCol('#34d399','#059669',this)"></div>
+        <div class="cdot" style="background:#f472b6" onclick="setCol('#f472b6','#be185d',this)"></div>
+        <div class="cdot" style="background:#fb923c" onclick="setCol('#fb923c','#c2410c',this)"></div>
+        <div class="cdot" style="background:#e2e8f0" onclick="setCol('#e2e8f0','#94a3b8',this)"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PREVIEW -->
+  <div class="pp">
+    <div class="cvp" id="cvp"
+      style="
+        --cv-bg:#f0f4fa;--cv-left:#dce7f5;--cv-dark:#0f1f3d;--cv-dark2:#2a3f5f;
+        --cv-accent:#4fc3f7;--cv-accent2:#1e88e5;--cv-white:#f0f4fa;
+        --cv-refbg:rgba(15,31,61,.06);
+      ">
+      <div class="cv-topbar"></div>
+      <div class="cv-hero">
+        <div class="cv-hero-text">
+          <div class="cv-line1" id="cv-name">PRÉNOM <span>NOM</span></div>
+          <div class="cv-line2" id="cv-titre">Votre titre professionnel</div>
+          <div class="cv-contact-strip" id="cv-contacts"></div>
+        </div>
+        <div class="cv-photo-zone">
+          <div class="cv-photo-ring" id="cv-photo-ring">
+            <div class="cv-photo-ph">👤</div>
+          </div>
+        </div>
+      </div>
+      <div class="cv-body">
+        <div class="cv-left" id="cv-left"></div>
+        <div class="cv-right" id="cv-right"></div>
+      </div>
+      <!-- Signature zone -->
+      <div id="cv-sig-block" style="padding:0 32px 24px;display:flex;justify-content:flex-end"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+let S={
+  prenom:'',nom:'',titre:'',about:'',tel:'',email:'',ville:'',web:'',photo:null,
+  exp:[],edu:[],skills:[],langs:[],refs:[],
+  accent:'#4fc3f7',accent2:'#1e88e5'
+};
+let C={exp:0,edu:0,lang:0,ref:0};
+
+function showTab(id){
+  const ns=['info','exp','edu','sk','ref','sig','des'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('on',ns[i]===id));
+  document.querySelectorAll('.tc').forEach(c=>c.classList.remove('on'));
+  document.getElementById('tab-'+id).classList.add('on');
+  if(id==='sig') initCanvas();
+}
+
+function doPhoto(inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    S.photo=e.target.result;
+    document.getElementById('ph-prev').src=S.photo;
+    document.getElementById('ph-prev').style.display='block';
+    document.getElementById('ph-ph').style.display='none';
+    render();
+  };r.readAsDataURL(f);
+}
+
+function addExp(){
+  const id=++C.exp;
+  S.exp.push({id,role:'',company:'',start:'',end:'',desc:''});
+  document.getElementById('exp-list').insertAdjacentHTML('beforeend',`
+    <div class="ecard" id="exp-${id}">
+      <button class="rm" onclick="rmI('exp',${id})">×</button>
+      <div class="fg"><label>Poste / Rôle</label><input placeholder="Marketing Manager" oninput="upd('exp',${id},'role',this.value)"></div>
+      <div class="fg"><label>Entreprise</label><input placeholder="Nom de l'entreprise" oninput="upd('exp',${id},'company',this.value)"></div>
+      <div class="fr">
+        <div class="fg"><label>Début</label><input placeholder="Jan 2020" oninput="upd('exp',${id},'start',this.value)"></div>
+        <div class="fg"><label>Fin</label><input placeholder="2023" oninput="upd('exp',${id},'end',this.value)"></div>
+      </div>
+      <div class="fg"><label>Description</label><textarea placeholder="Missions principales…" oninput="upd('exp',${id},'desc',this.value)"></textarea></div>
+    </div>`);render();
+}
+
+function addEdu(){
+  const id=++C.edu;
+  S.edu.push({id,school:'',degree:'',start:'',end:''});
+  document.getElementById('edu-list').insertAdjacentHTML('beforeend',`
+    <div class="ecard" id="edu-${id}">
+      <button class="rm" onclick="rmI('edu',${id})">×</button>
+      <div class="fg"><label>Établissement</label><input placeholder="Université de Dakar" oninput="upd('edu',${id},'school',this.value)"></div>
+      <div class="fg"><label>Diplôme</label><input placeholder="Master en Marketing" oninput="upd('edu',${id},'degree',this.value)"></div>
+      <div class="fr">
+        <div class="fg"><label>Début</label><input placeholder="2018" oninput="upd('edu',${id},'start',this.value)"></div>
+        <div class="fg"><label>Fin</label><input placeholder="2020" oninput="upd('edu',${id},'end',this.value)"></div>
+      </div>
+    </div>`);render();
+}
+
+function addSk(){
+  const inp=document.getElementById('sk-inp'),v=inp.value.trim();
+  if(!v)return;S.skills.push(v);inp.value='';refreshSk();render();
+}
+function rmSk(i){S.skills.splice(i,1);refreshSk();render();}
+function refreshSk(){
+  document.getElementById('sk-wrap').innerHTML=S.skills.map((s,i)=>
+    `<div class="schip">${s}<button onclick="rmSk(${i})">×</button></div>`).join('');
+}
+
+function addLang(){
+  const id=++C.lang;
+  S.langs.push({id,lang:'',level:''});
+  document.getElementById('lang-list').insertAdjacentHTML('beforeend',`
+    <div class="ecard" id="lang-${id}">
+      <button class="rm" onclick="rmI('lang',${id})">×</button>
+      <div class="fr">
+        <div class="fg"><label>Langue</label><input placeholder="Français" oninput="upd('lang',${id},'lang',this.value)"></div>
+        <div class="fg"><label>Niveau</label>
+          <select onchange="upd('lang',${id},'level',this.value)">
+            <option value="">—</option>
+            <option>Langue maternelle</option><option>Courant</option>
+            <option>Avancé</option><option>Intermédiaire</option><option>Débutant</option>
+          </select>
+        </div>
+      </div>
+    </div>`);render();
+}
+
+function addRef(){
+  const id=++C.ref;
+  S.refs.push({id,name:'',company:'',phone:'',email:''});
+  document.getElementById('ref-list').insertAdjacentHTML('beforeend',`
+    <div class="ecard" id="ref-${id}">
+      <button class="rm" onclick="rmI('ref',${id})">×</button>
+      <div class="fg"><label>Nom complet</label><input placeholder="Harumi Kobayashi" oninput="upd('ref',${id},'name',this.value)"></div>
+      <div class="fg"><label>Société / Poste</label><input placeholder="Arowwai Industries / CEO" oninput="upd('ref',${id},'company',this.value)"></div>
+      <div class="fr">
+        <div class="fg"><label>Téléphone</label><input placeholder="123-456-7890" oninput="upd('ref',${id},'phone',this.value)"></div>
+        <div class="fg"><label>Email</label><input placeholder="ref@mail.com" oninput="upd('ref',${id},'email',this.value)"></div>
+      </div>
+    </div>`);render();
+}
+
+function upd(t,id,f,v){
+  const a=t==='exp'?S.exp:t==='edu'?S.edu:t==='lang'?S.langs:S.refs;
+  const it=a.find(e=>e.id===id);if(it){it[f]=v;render();}
+}
+function rmI(t,id){
+  const a=t==='exp'?S.exp:t==='edu'?S.edu:t==='lang'?S.langs:S.refs;
+  const i=a.findIndex(e=>e.id===id);if(i>-1)a.splice(i,1);
+  document.getElementById(`${t}-${id}`)?.remove();render();
+}
+
+function setCol(a,a2,el){
+  S.accent=a;S.accent2=a2;
+  document.querySelectorAll('.cdot').forEach(d=>d.classList.remove('on'));
+  el.classList.add('on');render();
+}
+
+function render(){
+  S.prenom=document.getElementById('f-prenom').value;
+  S.nom=document.getElementById('f-nom').value;
+  S.titre=document.getElementById('f-titre').value;
+  S.about=document.getElementById('f-about').value;
+  S.tel=document.getElementById('f-tel').value;
+  S.email=document.getElementById('f-email').value;
+  S.ville=document.getElementById('f-ville').value;
+  S.web=document.getElementById('f-web').value;
+
+  const p=document.getElementById('cvp');
+  p.style.setProperty('--cv-accent',S.accent);
+  p.style.setProperty('--cv-accent2',S.accent2);
+
+  // Name
+  const fn=(S.prenom||'PRÉNOM').toUpperCase();
+  const ln=(S.nom||'NOM').toUpperCase();
+  document.getElementById('cv-name').innerHTML=`${fn} <span>${ln}</span>`;
+  document.getElementById('cv-titre').textContent=S.titre||'Votre titre professionnel';
+
+  // Contacts
+  const contacts=[];
+  if(S.tel)   contacts.push(`<div class="cv-ci"><div class="cv-ci-dot"></div>${S.tel}</div>`);
+  if(S.email) contacts.push(`<div class="cv-ci"><div class="cv-ci-dot"></div>${S.email}</div>`);
+  if(S.ville) contacts.push(`<div class="cv-ci"><div class="cv-ci-dot"></div>${S.ville}</div>`);
+  if(S.web)   contacts.push(`<div class="cv-ci"><div class="cv-ci-dot"></div>${S.web}</div>`);
+  document.getElementById('cv-contacts').innerHTML=contacts.join('');
+
+  // Photo
+  const ring=document.getElementById('cv-photo-ring');
+  ring.innerHTML=S.photo?`<img src="${S.photo}" alt="photo">`:`<div class="cv-photo-ph">👤</div>`;
+
+  // LEFT COL
+  let left='';
+
+  // Education
+  if(S.edu.length){
+    left+=`<div class="cv-lsec"><div class="cv-ltitle">Formation</div>`;
+    S.edu.forEach(e=>{
+      left+=`<div class="cv-edu-block">
+        <div class="cv-edu-school">${e.school||'—'}</div>
+        <div class="cv-edu-deg">${e.degree||''}</div>
+        ${e.start||e.end?`<div class="cv-edu-dates">${[e.start,e.end].filter(Boolean).join(' – ')}</div>`:''}
+      </div>`;
+    });
+    left+=`</div>`;
+  }
+
+  // Skills
+  if(S.skills.length){
+    left+=`<div class="cv-lsec"><div class="cv-ltitle">Compétences</div>`;
+    S.skills.forEach(s=>{
+      left+=`<div class="cv-skill-item">
+        <div class="cv-skill-name">${s}</div>
+        <div class="cv-skill-bar"><div class="cv-skill-fill"></div></div>
+      </div>`;
+    });
+    left+=`</div>`;
+  }
+
+  // Languages
+  if(S.langs.length){
+    left+=`<div class="cv-lsec"><div class="cv-ltitle">Langues</div>`;
+    S.langs.forEach(l=>{
+      left+=`<div class="cv-lang-item">
+        <span>${l.lang||''}</span>
+        <span class="cv-lang-lvl">${l.level||''}</span>
+      </div>`;
+    });
+    left+=`</div>`;
+  }
+
+  // Contacts in left if any
+  if(S.tel||S.email||S.ville||S.web){
+    left+=`<div class="cv-lsec"><div class="cv-ltitle">Contact</div>`;
+    if(S.tel)   left+=`<div class="cv-litem"><span class="cv-licon">☎</span>${S.tel}</div>`;
+    if(S.email) left+=`<div class="cv-litem"><span class="cv-licon">✉</span>${S.email}</div>`;
+    if(S.ville) left+=`<div class="cv-litem"><span class="cv-licon">⌖</span>${S.ville}</div>`;
+    if(S.web)   left+=`<div class="cv-litem"><span class="cv-licon">⇗</span>${S.web}</div>`;
+    left+=`</div>`;
+  }
+
+  document.getElementById('cv-left').innerHTML=left||`<div style="color:rgba(15,31,61,.2);font-size:7.5pt;font-style:italic">Ajoutez formation, compétences et langues…</div>`;
+
+  // RIGHT COL
+  let right='';
+
+  if(S.about){
+    right+=`<div class="cv-sec">
+      <div class="cv-rtitle"><span class="cv-rtitle-num">01</span>Profil</div>
+      <div class="cv-about">${S.about}</div>
+    </div>`;
+  }
+
+  if(S.exp.length){
+    right+=`<div class="cv-sec"><div class="cv-rtitle"><span class="cv-rtitle-num">02</span>Expériences</div>`;
+    S.exp.forEach(e=>{
+      right+=`<div class="cv-exp">
+        <div class="cv-exp-hdr">
+          <div class="cv-exp-role">${e.role||'<em style="opacity:.3">Poste</em>'}</div>
+          ${e.start||e.end?`<div class="cv-exp-date">${[e.start,e.end].filter(Boolean).join(' – ')}</div>`:''}
+        </div>
+        <div class="cv-exp-co">${e.company||''}</div>
+        ${e.desc?`<div class="cv-exp-desc">${e.desc}</div>`:''}
+      </div>`;
+    });
+    right+=`</div>`;
+  } else {
+    right+=`<div class="cv-sec">
+      <div class="cv-rtitle"><span class="cv-rtitle-num">02</span>Expériences</div>
+      <div class="cv-empty">Ajoutez vos expériences professionnelles…</div>
+    </div>`;
+  }
+
+  if(S.refs.length){
+    right+=`<div class="cv-sec"><div class="cv-rtitle"><span class="cv-rtitle-num">03</span>Références</div>
+    <div class="cv-refs">`;
+    S.refs.forEach(r=>{
+      right+=`<div class="cv-ref">
+        <div class="cv-ref-name">${r.name||'—'}</div>
+        <div class="cv-ref-co">${r.company||''}</div>
+        ${r.phone?`<div class="cv-ref-line"><b>Tél :</b> ${r.phone}</div>`:''}
+        ${r.email?`<div class="cv-ref-line"><b>Email :</b> ${r.email}</div>`:''}
+      </div>`;
+    });
+    right+=`</div></div>`;
+  }
+
+  document.getElementById('cv-right').innerHTML=right;
+
+  // Signature block
+  const sigEl=document.getElementById('cv-sig-block');
+  if(sigEl){
+    if(S.signature){
+      sigEl.innerHTML=`
+        <div style="display:flex;flex-direction:column;align-items:flex-end;margin-top:4px">
+          <img src="${S.signature}" style="max-height:55px;max-width:180px;object-fit:contain">
+          <div style="font-size:7pt;color:var(--cv-dark2,#2a3f5f);margin-top:3px;letter-spacing:.5px;opacity:.6">${S.prenom} ${S.nom}</div>
+        </div>`;
+    } else {
+      sigEl.innerHTML='';
+    }
+  }
+}
+
+// ── SIGNATURE ──
+S.signature = null;
+let sigMode='draw', penColor='#0f1f3d', penSize=2, drawing=false, canvasReady=false;
+
+function setSigMode(m) {
+  sigMode=m;
+  document.getElementById('sig-draw-panel').style.display=m==='draw'?'block':'none';
+  document.getElementById('sig-upload-panel').style.display=m==='upload'?'block':'none';
+  const bd=document.getElementById('sig-mode-draw'), bu=document.getElementById('sig-mode-upload');
+  bd.style.background=m==='draw'?'var(--cyan)':'var(--steel)'; bd.style.color=m==='draw'?'var(--night)':'var(--silver)';
+  bu.style.background=m==='upload'?'var(--cyan)':'var(--steel)'; bu.style.color=m==='upload'?'var(--night)':'var(--silver)';
+  if(m==='draw') initCanvas();
+}
+
+function initCanvas() {
+  if(canvasReady) return;
+  const c=document.getElementById('sig-canvas'); if(!c) return;
+  const ctx=c.getContext('2d');
+  ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,c.width,c.height);
+  function pos(e){const r=c.getBoundingClientRect(),src=e.touches?e.touches[0]:e;return{x:(src.clientX-r.left)*(c.width/r.width),y:(src.clientY-r.top)*(c.height/r.height)};}
+  function start(e){e.preventDefault();drawing=true;const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);}
+  function move(e){e.preventDefault();if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.strokeStyle=penColor;ctx.lineWidth=penSize;ctx.lineCap='round';ctx.lineJoin='round';ctx.stroke();}
+  function end(){drawing=false;}
+  c.addEventListener('mousedown',start);c.addEventListener('mousemove',move);c.addEventListener('mouseup',end);c.addEventListener('mouseleave',end);
+  c.addEventListener('touchstart',start,{passive:false});c.addEventListener('touchmove',move,{passive:false});c.addEventListener('touchend',end);
+  canvasReady=true;
+}
+
+function setPenColor(col,el){
+  penColor=col;
+  document.querySelectorAll('.pen-dot').forEach(d=>d.style.borderColor='transparent');
+  el.style.borderColor='var(--cyan)';
+}
+function clearSig(){
+  const c=document.getElementById('sig-canvas'),ctx=c.getContext('2d');
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,c.width,c.height);
+}
+function saveSig(){
+  S.signature=document.getElementById('sig-canvas').toDataURL('image/png');
+  document.getElementById('sig-status').textContent='✓ Signature appliquée au CV';
+  render();
+}
+function loadSigFile(inp){
+  const f=inp.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=e=>{
+    S.signature=e.target.result;
+    document.getElementById('sig-img-prev').src=S.signature;
+    document.getElementById('sig-upload-preview').style.display='block';
+    document.getElementById('sig-upload-ph').style.display='none';
+    document.getElementById('sig-status').textContent='✓ Signature importée et appliquée';
+    render();
+  };r.readAsDataURL(f);
+}
+function removeSig(){
+  S.signature=null;
+  document.getElementById('sig-file').value='';
+  document.getElementById('sig-upload-preview').style.display='none';
+  document.getElementById('sig-upload-ph').style.display='block';
+  document.getElementById('sig-status').textContent='';
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
